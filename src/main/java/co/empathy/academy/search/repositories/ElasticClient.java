@@ -19,7 +19,6 @@ public class ElasticClient {
      }
 
      public String getClusterName() throws IOException {
-         System.out.println("Pruebas: " + elastic.establishConnection().cluster());
          return elastic.establishConnection().cluster().health().clusterName();
      }
 }

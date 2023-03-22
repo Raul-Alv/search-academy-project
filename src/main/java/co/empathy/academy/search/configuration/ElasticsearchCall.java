@@ -25,4 +25,5 @@ public class ElasticsearchCall {
         ElasticsearchClient client = new ElasticsearchClient(transport);
         return client;
     }
+
 }

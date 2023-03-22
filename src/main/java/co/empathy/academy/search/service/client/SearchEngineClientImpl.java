@@ -5,6 +5,7 @@ import co.empathy.academy.search.repositories.ElasticClient;
 
 import java.io.IOException;
 
+
 public class SearchEngineClientImpl implements SearchEngineClient {
 
     private SearchEngineClientImpl(){
