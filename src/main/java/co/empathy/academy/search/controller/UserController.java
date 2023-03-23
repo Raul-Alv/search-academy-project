@@ -2,10 +2,11 @@ package co.empathy.academy.search.controller;
 
 import co.empathy.academy.search.models.User;
 import co.empathy.academy.search.service.UserService;
+import co.empathy.academy.search.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,5 +49,10 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(id, user));
     }
 
-
+    @RequestMapping(value = "user/load", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity loadUsers(@RequestParam MultipartFile file){
+        userService.loadUsers(file);
+        return ResponseEntity.accepted().build();
+    }
 }
