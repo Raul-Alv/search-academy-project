@@ -1,5 +1,8 @@
 package co.empathy.academy.search.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Movie {
     private String tconst;
     private String titleType;
@@ -10,6 +13,11 @@ public class Movie {
     private int endYear;
     private int runtimeMinutes;
     private String genres;
+    private double averageRating;
+    private int numVotes;
+    private List<Akas> akas = new ArrayList<>();
+    private List<Principal> directors = new ArrayList<>();
+
 
     public Movie(String tconst, String titleType, String primaryTitle, String originalTitle, boolean isAdult, int startYear, int endYear, int runtimeMinutes, String genres) {
         this.tconst = tconst;
@@ -21,6 +29,7 @@ public class Movie {
         this.endYear = endYear;
         this.runtimeMinutes = runtimeMinutes;
         this.genres = genres;
+
     }
 
     public String getTconst() {
@@ -93,5 +102,21 @@ public class Movie {
 
     public void setGenres(String genres) {
         this.genres = genres;
+    }
+
+    public void addAkas(Akas aka) {
+        akas.add(aka);
+    }
+
+    public void setAverageRating(double parseDouble) {
+        this.averageRating = parseDouble;
+    }
+
+    public void setNumVotes(int parseInt) {
+        this.numVotes = parseInt;
+    }
+
+    public void addPrincipal(Principal principal) {
+        this.directors.add(principal);
     }
 }

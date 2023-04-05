@@ -2,14 +2,14 @@
 # Build stage
 #
 FROM maven AS build
-COPY src /Users/raul/Documents/search/src
-COPY pom.xml /Users/raul/Documents/search/
-RUN mvn -f /Users/raul/Documents/search/ clean package
+COPY src /home/app/src
+COPY pom.xml /home/app/src
+RUN mvn -f /home/app clean package
 
 #
 # Package stage
 #
 FROM openjdk
-COPY --from=build /Users/raul/Documents/search/target/demo_search-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
+COPY --from=build /home/app/target/demo_search-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
