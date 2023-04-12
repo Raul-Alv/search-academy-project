@@ -4,14 +4,17 @@ import co.empathy.academy.search.models.Akas;
 import co.empathy.academy.search.models.Movie;
 import co.empathy.academy.search.models.Principal;
 import co.empathy.academy.search.repositories.ElasticClient;
+import com.fasterxml.jackson.core.util.BufferRecycler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -47,7 +50,6 @@ public class FileLoaderServiceImpl implements FileLoaderService{
         List<String> principalsList = Arrays.asList(principals.getOriginalFilename().split("\\s*,\\s*"));
         List<String> crewList = Arrays.asList(crew.getOriginalFilename().split("\\s*,\\s*"));
         List<String> episodesList = Arrays.asList(episodes.getOriginalFilename().split("\\s*,\\s*"));
-
         /*
         //To read multiple files
         List<String> files = Arrays.asList(
@@ -60,19 +62,15 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                 );
 
          */
-        /*
-        try {
-            elasticClient.createIndex(map.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        */
+
         try {
             elasticClient.createIndex();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //readBasics(basicsList);
+
+
+
         basicsList.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -85,12 +83,13 @@ public class FileLoaderServiceImpl implements FileLoaderService{
         ).skip(1).forEach(line -> {
             System.out.println("creando: " + line);
             Movie u = createMovie(line);
-            addAkas(u, akasList);
-            addRatings(u, ratingsList);
-            addPrincipals(u, principalsList);
-            addCrew(u, crewList);
-            addEpisodes(u, episodesList);
             if(!u.isAdult()) {
+                addAkas(u, akasList);
+                addRatings(u, ratingsList);
+                //addPrincipals(u, principalsList);
+                //addCrew(u, crewList);
+                //addEpisodes(u, episodesList);
+
                 movies.add(u);
             }
                     //movies.add(u);
@@ -100,7 +99,21 @@ public class FileLoaderServiceImpl implements FileLoaderService{
         elasticClient.indexDocument(movies);
     }
 
-    @Async
+    private Stream readFile(List<String> fileName){
+        Stream o = fileName.stream().map(Paths::get).flatMap(
+                path -> {
+                    try {
+                        return Files.lines(path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return Stream.empty();
+                }
+        ).skip(1);
+
+        return o;
+    }
+
     private void addAkas(Movie u, List<String> akas) {
         akas.stream().map(Paths::get).flatMap(
                 path -> {
@@ -111,8 +124,8 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     }
                     return Stream.empty();
                 }
-        ).skip(1).forEach(line -> {
-            if(line.split("\t")[0].equals(u.getTconst())){
+        ).skip(1).takeWhile(id -> id.split("\t")[0].equals(u.getTconst())).forEach(line -> {
+
                 Akas aka = new Akas();
                 //aka.setOrdering(Integer.parseInt(line.split("\t")[1]));
                 aka.setTitle(line.split("\t")[2]);
@@ -121,8 +134,11 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                 //aka.setTypes(line.split("\t")[5]);
                 //aka.setAttributes(line.split("\t")[6]);
                 aka.setIsOriginalTitle(Boolean.parseBoolean(line.split("\t")[7]));
+                System.out.println("aka: " + aka.getTitle());
                 u.addAkas(aka);
-            }
+
+
+
 
         }
         );
@@ -138,11 +154,11 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     }
                     return Stream.empty();
                 }
-        ).skip(1).forEach(line -> {
-                    if(line.split("\t")[0].equals(u.getTconst())){
+        ).skip(1).takeWhile(id -> id.split("\t")[0].equals(u.getTconst())).forEach(line -> {
+
                         u.setAverageRating(Double.parseDouble(line.split("\t")[1]));
                         u.setNumVotes(Integer.parseInt(line.split("\t")[2]));
-                    }
+                        System.out.println("rating: " + u);
 
                 }
         );

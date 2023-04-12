@@ -1,0 +1,200 @@
+titleId	ordering	title	region	language	types	attributes	isOriginalTitle
+tt0000001	1	Карменсіта	UA	\N	imdbDisplay	\N	0
+tt0000001	2	Carmencita	DE	\N	\N	literal title	0
+tt0000001	3	Carmencita - spanyol tánc	HU	\N	imdbDisplay	\N	0
+tt0000001	4	Καρμενσίτα	GR	\N	imdbDisplay	\N	0
+tt0000001	5	Карменсита	RU	\N	imdbDisplay	\N	0
+tt0000001	6	Carmencita	US	\N	imdbDisplay	\N	0
+tt0000001	7	Carmencita	\N	\N	original	\N	1
+tt0000001	8	カルメンチータ	JP	ja	imdbDisplay	\N	0
+tt0000002	1	Le clown et ses chiens	\N	\N	original	\N	1
+tt0000002	2	Le clown et ses chiens	FR	\N	imdbDisplay	\N	0
+tt0000002	3	A bohóc és kutyái	HU	\N	imdbDisplay	\N	0
+tt0000002	4	Der Clown und seine Hunde	DE	\N	\N	literal title	0
+tt0000002	5	Clovnul si cainii sai	RO	\N	imdbDisplay	\N	0
+tt0000002	6	Клоун и его собаки	RU	\N	imdbDisplay	\N	0
+tt0000002	7	The Clown and His Dogs	US	\N	\N	literal English title	0
+tt0000002	8	道化師と犬	JP	ja	imdbDisplay	\N	0
+tt0000003	1	Sarmanul Pierrot	RO	\N	imdbDisplay	\N	0
+tt0000003	2	Szegény Pierrot	HU	\N	imdbDisplay	\N	0
+tt0000003	3	哀れなピエロ	JP	ja	imdbDisplay	\N	0
+tt0000003	4	Бідний П'єро	UA	\N	imdbDisplay	\N	0
+tt0000003	5	Бедный Пьеро	RU	\N	imdbDisplay	\N	0
+tt0000003	6	Pauvre Pierrot	\N	\N	original	\N	1
+tt0000003	7	Poor Pierrot	GB	\N	imdbDisplay	\N	0
+tt0000003	8	Pauvre Pierrot	FR	\N	imdbDisplay	\N	0
+tt0000003	9	Armer Pierrot	DE	\N	\N	literal title	0
+tt0000004	1	Un bon bock	\N	\N	original	\N	1
+tt0000004	2	Un bon bock	FR	\N	imdbDisplay	\N	0
+tt0000004	3	Ein gutes Glas Bier	DE	\N	\N	literal title	0
+tt0000004	4	Un ţap de bere	RO	\N	imdbDisplay	\N	0
+tt0000004	5	Полная кружка пива	RU	\N	imdbDisplay	\N	0
+tt0000004	6	一杯のビール	JP	ja	imdbDisplay	\N	0
+tt0000004	7	A Good Beer	\N	\N	\N	\N	0
+tt0000004	8	Egy jó pohár sör	HU	\N	imdbDisplay	\N	0
+tt0000005	10	Blacksmith Scene	US	\N	imdbDisplay	\N	0
+tt0000005	11	Blacksmith Scene	\N	\N	original	\N	1
+tt0000005	12	The Blacksmith's Forge	GB	\N	\N	informal alternative title	0
+tt0000005	1	Blacksmithing Scene	US	\N	alternative	\N	0
+tt0000005	2	Ковальська сцена	UA	\N	imdbDisplay	\N	0
+tt0000005	3	Сцена в кузне	RU	\N	imdbDisplay	\N	0
+tt0000005	4	Blacksmith Scene	CA	en	imdbDisplay	\N	0
+tt0000005	5	Blacksmith Shop	GB	\N	\N	informal alternative title	0
+tt0000005	6	Blacksmith Scene #1	US	\N	alternative	\N	0
+tt0000005	7	Blacksmithing	US	\N	\N	informal alternative title	0
+tt0000005	8	Schmiedszene	DE	\N	\N	literal title	0
+tt0000005	9	A patkolókovács	HU	\N	imdbDisplay	\N	0
+tt0000006	1	Китайский опиумный притон	RU	\N	imdbDisplay	\N	0
+tt0000006	2	Chinezes Fumadores de Ópio	PT	\N	\N	promotional title	0
+tt0000006	3	Chinese Opium Den	US	\N	imdbDisplay	\N	0
+tt0000006	4	Kínai ópiumbarlang	HU	\N	imdbDisplay	\N	0
+tt0000006	5	Chinese Opium Den	\N	\N	original	\N	1
+tt0000006	6	Chinesische Opiumhöhle	DE	\N	\N	literal title	0
+tt0000007	1	Corbett and Courtney Before the Kinetograph	US	\N	imdbDisplay	\N	0
+tt0000007	2	Corbett and Courtney Before the Kinetograph	\N	\N	original	\N	1
+tt0000007	3	A Corbett-Courtney bokszmeccs	HU	\N	imdbDisplay	\N	0
+tt0000007	4	キネトグラフの前のコーベットとコートニー	JP	ja	imdbDisplay	\N	0
+tt0000007	5	The Corbett-Courtney Fight	US	\N	alternative	\N	0
+tt0000007	6	Jim Corbett vs. Peter Courtney	US	\N	alternative	\N	0
+tt0000007	7	Edison Kinetoscopic Record of Boxers	\N	\N	\N	\N	0
+tt0000007	8	Корбетт и Кортни перед кинематографом	RU	\N	imdbDisplay	\N	0
+tt0000007	9	Corbett und Courtney vor dem Kinetographen	DE	\N	\N	literal title	0
+tt0000008	10	Fred Ott's Sneeze	\N	\N	\N	\N	0
+tt0000008	11	Edison kinetoskopische Aufnahme eines Niesens	DE	\N	\N	literal title	0
+tt0000008	1	Edison asszisztense tüsszent	HU	\N	imdbDisplay	\N	0
+tt0000008	2	フレッド・オット－のくしゃみ	JP	ja	imdbDisplay	\N	0
+tt0000008	3	Edison Kinetoscopic Record of a Sneeze, January 7, 1894	US	\N	\N	complete title	0
+tt0000008	4	Edison Kinetoscopic Record of a Sneeze	US	\N	imdbDisplay	\N	0
+tt0000008	5	Edison Kinetoscopic Record of a Sneeze	\N	\N	original	\N	1
+tt0000008	6	Fred Otts Niesen	DE	\N	\N	literal title	0
+tt0000008	7	Чих, записанный на кинетоскоп Эдисона	RU	\N	imdbDisplay	\N	0
+tt0000008	8	The Films of Thomas A Edison presented by Raymond Rohauer	US	\N	\N	reissue title	0
+tt0000008	9	Чхання Фреда Отта	UA	\N	imdbDisplay	\N	0
+tt0000009	1	Miss Jerry	\N	\N	original	\N	1
+tt0000009	2	Miss Jerry	AU	\N	imdbDisplay	\N	0
+tt0000009	3	Fräulein Jerry	DE	\N	\N	literal title	0
+tt0000009	4	Miss Jerry	HU	\N	imdbDisplay	\N	0
+tt0000009	5	Miss Jerry	US	\N	imdbDisplay	\N	0
+tt0000010	10	Вихід робітників із фабрики	UA	\N	imdbDisplay	\N	0
+tt0000010	11	La salida de la fábrica Lumière en Lyon	ES	\N	imdbDisplay	\N	0
+tt0000010	12	Työntekijät poistuvat Lumière-tehtaalta	FI	\N	\N	informal title	0
+tt0000010	13	A munkaidő vége	HU	\N	imdbDisplay	\N	0
+tt0000010	14	Wyjście robotników z fabryki	PL	\N	imdbDisplay	\N	0
+tt0000010	15	Lumière-fabrikens arbetare	FI	sv	\N	informal title	0
+tt0000010	16	Exiting the Factory	US	\N	imdbDisplay	\N	0
+tt0000010	17	La sortie de l'usine Lumière	FR	\N	alternative	\N	0
+tt0000010	18	La sortie de l'usine Lumière à Lyon	\N	\N	original	\N	1
+tt0000010	19	La sortie des usines Lumière	FR	\N	alternative	\N	0
+tt0000010	1	La salida de los obreros de la fábrica Lumière	AR	\N	\N	\N	0
+tt0000010	20	Радници напуштају фабрику Лимијер	RS	\N	imdbDisplay	\N	0
+tt0000010	21	Leaving the Factory	US	\N	imdbDisplay	\N	0
+tt0000010	22	Salida de obreros de la fábrica Lumiere	UY	\N	\N	premiere title	0
+tt0000010	23	La sortie des ouvriers de l'usine Lumière	FR	\N	\N	informal alternative title	0
+tt0000010	24	L'uscita dalle fabbriche Lumière	IT	\N	imdbDisplay	\N	0
+tt0000010	25	Выход рабочих с фабрики 'Люмьер'	RU	\N	imdbDisplay	\N	0
+tt0000010	2	A Saída dos Operários da Fábrica Lumière	BR	\N	\N	\N	0
+tt0000010	3	Employees Leaving the Lumière Factory	US	\N	alternative	\N	0
+tt0000010	4	Sortie d'usine	FR	\N	\N	short title	0
+tt0000010	5	La sortie de l'usine Lumière à Lyon	FR	\N	imdbDisplay	\N	0
+tt0000010	6	La sortie de l'usine Lumière à Lyon	CA	en	imdbDisplay	\N	0
+tt0000010	7	Arbeiter verlassen die Lumière-Werke	DE	\N	imdbDisplay	\N	0
+tt0000010	8	Workers Leaving the Lumière Factory	US	\N	imdbDisplay	\N	0
+tt0000010	9	工場の出口	JP	ja	imdbDisplay	\N	0
+tt0000011	1	Akrobatisches Potpourri	DE	\N	imdbDisplay	\N	0
+tt0000011	2	Akrobatisches Potpourri	\N	\N	original	\N	1
+tt0000011	3	Акробатическая смесь	RU	\N	imdbDisplay	\N	0
+tt0000012	10	Juna saapuu asemalle	FI	\N	\N	informal title	0
+tt0000012	11	Ankunft eines Zuges in La Ciotat	DE	\N	imdbDisplay	\N	0
+tt0000012	12	A vonat érkezése	HU	\N	imdbDisplay	\N	0
+tt0000012	13	Прибытие поезда на вокзал города Ла-Сьота	RU	\N	imdbDisplay	\N	0
+tt0000012	14	Toget kører ind på Le Ciotat	DK	\N	\N	\N	0
+tt0000012	15	Bir trenin La Ciotat garına varışı	TR	tr	imdbDisplay	\N	0
+tt0000012	16	The Arrival of a Train	GB	\N	imdbDisplay	\N	0
+tt0000012	17	Train Pulling into a Station	GB	\N	alternative	\N	0
+tt0000012	18	L'arrivée d'un train à La Ciotat	FR	\N	imdbDisplay	\N	0
+tt0000012	19	L'arrivo di un treno nella stazione di La Ciotat	IT	\N	\N	\N	0
+tt0000012	1	The Arrival of a Train	US	\N	imdbDisplay	\N	0
+tt0000012	20	L'arrivée d'un train en gare de La Ciotat	FR	\N	alternative	\N	0
+tt0000012	21	Przyjazd pociągu na stację	PL	\N	imdbDisplay	\N	0
+tt0000012	22	The Arrival of a Train	XWW	en	imdbDisplay	\N	0
+tt0000012	23	La llegada de un tren a la estación de La Ciotat	ES	\N	imdbDisplay	\N	0
+tt0000012	24	L'arrivée d'un train à La Ciotat	CA	en	imdbDisplay	\N	0
+tt0000012	25	ラ・シオタ駅への列車の到着	JP	ja	imdbDisplay	\N	0
+tt0000012	26	Прибуття потяга на вокзал Ла-Сьота	UA	\N	imdbDisplay	\N	0
+tt0000012	27	The Arrival of a Train	XEU	en	imdbDisplay	\N	0
+tt0000012	28	L'arrivo di un treno alla stazione di La Ciotat	IT	\N	\N	\N	0
+tt0000012	2	The Arrival of a Train	XWW	\N	imdbDisplay	\N	0
+tt0000012	3	The Arrival of the Mail Train	US	\N	alternative	\N	0
+tt0000012	4	L'arrivée d'un train à La Ciotat	\N	\N	original	\N	1
+tt0000012	5	Príchod vlaku do stanice La Ciotat	SK	\N	imdbDisplay	\N	0
+tt0000012	6	Долазак воза на станицу	RS	\N	imdbDisplay	\N	0
+tt0000012	7	A Chegada de um Trem à Estação	BR	\N	imdbDisplay	\N	0
+tt0000012	8	Tåget anländer till stationen	FI	sv	\N	informal title	0
+tt0000012	9	The Arrival of a Train at La Ciotat	XWW	en	alternative	\N	0
+tt0000013	10	A kongresszus tagjainak partraszállása	HU	\N	imdbDisplay	\N	0
+tt0000013	11	The Photographical Congress Arrives in Lyon	XWW	en	imdbDisplay	\N	0
+tt0000013	12	Arrivée des congressistes à Neuville-sur-Saône	FR	\N	alternative	\N	0
+tt0000013	13	Прибуття делегатів на фотоконгрес у Ліоні	UA	\N	imdbDisplay	\N	0
+tt0000013	14	Fotografi napuštaju palubu u Lionu	RS	\N	imdbDisplay	\N	0
+tt0000013	1	The Photographical Congress Arrives in Lyon	GB	\N	imdbDisplay	\N	0
+tt0000013	2	El desembarco del congreso de fotografía en Lyon	ES	\N	imdbDisplay	\N	0
+tt0000013	3	Le débarquement du congrès de photographie à Lyon	\N	\N	original	\N	1
+tt0000013	4	Le débarquement du congrès de photographie à Lyon	FR	\N	imdbDisplay	\N	0
+tt0000013	5	Прибытие делегатов на фотоконгресс в Лионе	RU	\N	imdbDisplay	\N	0
+tt0000013	6	Le débarquement des congressistes à Neuville	FR	\N	alternative	\N	0
+tt0000013	7	The Photographical Congress Arrives in Lyon	US	\N	imdbDisplay	\N	0
+tt0000013	8	Neuville-sur-Saône: Débarquement du congrès des photographes à Lyon	FR	\N	imdbDisplay	\N	0
+tt0000013	9	Przybycie delegatów na kongres fotograficzny w Lyonie	PL	\N	imdbDisplay	\N	0
+tt0000014	10	O Regador Regado	BR	\N	imdbDisplay	\N	0
+tt0000014	11	The Sprayer Sprayed	US	\N	alternative	\N	0
+tt0000014	12	L'arroseur arrosé	FR	\N	imdbDisplay	\N	0
+tt0000014	13	L'arroseur arrosé	\N	\N	original	\N	1
+tt0000014	14	Заливена вода	RS	\N	imdbDisplay	\N	0
+tt0000014	15	The Waterer Watered	US	\N	imdbDisplay	\N	0
+tt0000014	16	Arroseur et arrosé	FR	\N	alternative	\N	0
+tt0000014	17	Puutarhuri	FI	\N	\N	\N	0
+tt0000014	18	Pokropený kropic	CZ	\N	imdbDisplay	\N	0
+tt0000014	19	Политий поливальник	UA	\N	imdbDisplay	\N	0
+tt0000014	1	The Sprinkler Sprinkled	US	\N	imdbDisplay	\N	0
+tt0000014	20	Der begossene Gärtner	DE	\N	imdbDisplay	\N	0
+tt0000014	21	El regador regado	ES	\N	imdbDisplay	\N	0
+tt0000014	22	Trädgårsmästarn	FI	sv	\N	\N	0
+tt0000014	23	Le jardinier et le petit espiègle	FR	\N	alternative	\N	0
+tt0000014	24	Политый поливальщик	RU	\N	imdbDisplay	\N	0
+tt0000014	2	Tables Turned on the Gardener	US	\N	alternative	\N	0
+tt0000014	3	Gartneren vandes	DK	\N	\N	\N	0
+tt0000014	4	A megöntözött öntöző	HU	\N	imdbDisplay	\N	0
+tt0000014	5	Vattnaren bevattnad	SE	\N	\N	\N	0
+tt0000014	6	Le jardinier	FR	\N	\N	première title	0
+tt0000014	7	Oblany ogrodnik	PL	\N	\N	\N	0
+tt0000014	8	L'innaffiatore annaffiato	IT	\N	\N	\N	0
+tt0000014	9	水をかけられた散水夫	JP	ja	imdbDisplay	\N	0
+tt0000015	1	Вoкруг кабинки	RU	\N	imdbDisplay	\N	0
+tt0000015	2	Egy kabin körül	HU	\N	imdbDisplay	\N	0
+tt0000015	3	Around a Bathing Hut	US	\N	\N	literal English title	0
+tt0000015	4	Autour d'une cabine	FR	\N	imdbDisplay	\N	0
+tt0000015	5	Autour d'une cabine	\N	\N	original	\N	1
+tt0000015	6	Навколо кабінки	UA	\N	imdbDisplay	\N	0
+tt0000016	10	Båten lämnar hamnet	FI	sv	\N	informal title	0
+tt0000016	11	Łódź wypływająca z portu	PL	\N	imdbDisplay	\N	0
+tt0000016	12	Brod napušta luku	RS	\N	imdbDisplay	\N	0
+tt0000016	1	Boat Leaving the Port	XWW	en	imdbDisplay	\N	0
+tt0000016	2	La sortie du port	FR	\N	alternative	\N	0
+tt0000016	3	Лодка выходит из порта	RU	\N	imdbDisplay	\N	0
+tt0000016	4	Kikötőből távozó bárka	HU	\N	imdbDisplay	\N	0
+tt0000016	5	Boat Leaving the Port	GB	\N	imdbDisplay	\N	0
+tt0000016	6	Vene lähtee satamasta	FI	\N	\N	informal title	0
+tt0000016	7	Barque sortant du port	FR	\N	imdbDisplay	\N	0
+tt0000016	8	Boat Leaving the Port	US	\N	imdbDisplay	\N	0
+tt0000016	9	Barque sortant du port	\N	\N	original	\N	1
+tt0000017	1	Italienischer Bauerntanz	\N	\N	original	\N	1
+tt0000017	2	Bauerntanz zweier Kinder	DE	\N	\N	bowdlerized title	0
+tt0000017	3	Italienischer Bauerntanz	DE	\N	imdbDisplay	\N	0
+tt0000017	4	Итальянский крестьянский танец	RU	\N	imdbDisplay	\N	0
+tt0000018	1	Das boxende Känguruh	DE	\N	imdbDisplay	\N	0
+tt0000018	2	Cangurul boxer	RO	\N	imdbDisplay	\N	0
+tt0000018	3	Das boxende Känguruh	\N	\N	original	\N	1
+tt0000018	4	Бокс с кенгуру	RU	\N	imdbDisplay	\N	0
+tt0000018	5	Mr. Delaware and the Boxing Kangaroo	GB	\N	\N	reissue title	0
+tt0000019	1	The Clown Barber	GB	\N	imdbDisplay	\N	0
+tt0000019	2	The Clown Barber	\N	\N	original	\N	1

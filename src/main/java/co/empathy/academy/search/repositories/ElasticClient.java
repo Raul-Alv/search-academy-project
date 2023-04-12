@@ -9,6 +9,8 @@ import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
 import co.empathy.academy.search.configuration.ElasticsearchCall;
 import co.empathy.academy.search.models.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -57,7 +59,7 @@ public class ElasticClient {
                 for (Movie m : movies) {
                     br.operations(op -> op
                             .index(idx -> idx
-                                    .index("movies")
+                                    .index("imdb")
                                     .id(m.getTconst())
                                     .document(m)));
                     System.out.println("indexada: " + m.getTconst());
