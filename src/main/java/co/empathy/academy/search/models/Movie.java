@@ -16,7 +16,8 @@ public class Movie {
     private double averageRating;
     private int numVotes;
     private List<Akas> akas = new ArrayList<>();
-    private List<Principal> directors = new ArrayList<>();
+    private List<Principal> cast = new ArrayList<>();
+    private Crew director;
 
 
     public Movie(String tconst, String titleType, String primaryTitle, String originalTitle, boolean isAdult, int startYear, int endYear, int runtimeMinutes, String genres) {
@@ -117,6 +118,30 @@ public class Movie {
     }
 
     public void addPrincipal(Principal principal) {
-        this.directors.add(principal);
+        this.cast.add(principal);
+    }
+
+    public String getAkas(){
+        String result = "";
+        for(Akas aka: akas){
+            result += "Aka: " + aka.getTitle();
+        }
+        return result;
+    }
+
+    public String getPrincipals(){
+        String result = "";
+        for(Principal p: cast){
+            result += "Director: " + p.getNconst();
+        }
+        return result;
+    }
+
+    public void addDirector(Crew c) {
+        this.director = c;
+    }
+
+    public Crew getDirector(){
+        return director;
     }
 }

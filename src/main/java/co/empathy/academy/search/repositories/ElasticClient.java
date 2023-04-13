@@ -33,6 +33,7 @@ public class ElasticClient {
      }
 
      public void createIndex() throws IOException {
+
         elastic.establishConnection().indices().delete(i -> i.index("imdb"));
         elastic.establishConnection().indices().create(i -> i.index("imdb"));
 

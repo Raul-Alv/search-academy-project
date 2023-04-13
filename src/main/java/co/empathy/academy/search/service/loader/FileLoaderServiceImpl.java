@@ -1,6 +1,7 @@
 package co.empathy.academy.search.service.loader;
 
 import co.empathy.academy.search.models.Akas;
+import co.empathy.academy.search.models.Crew;
 import co.empathy.academy.search.models.Movie;
 import co.empathy.academy.search.models.Principal;
 import co.empathy.academy.search.repositories.ElasticClient;
@@ -83,11 +84,13 @@ public class FileLoaderServiceImpl implements FileLoaderService{
         ).skip(1).forEach(line -> {
             System.out.println("creando: " + line);
             Movie u = createMovie(line);
+
             if(!u.isAdult()) {
                 addAkas(u, akasList);
                 addRatings(u, ratingsList);
-                //addPrincipals(u, principalsList);
-                //addCrew(u, crewList);
+                addCrew(u, crewList);
+                addPrincipals(u, principalsList);
+
                 //addEpisodes(u, episodesList);
 
                 movies.add(u);
@@ -124,8 +127,8 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     }
                     return Stream.empty();
                 }
-        ).skip(1).takeWhile(id -> id.split("\t")[0].equals(u.getTconst())).forEach(line -> {
-
+        ).skip(1).forEach(line -> {
+            if(line.split("\t")[0].equals(u.getTconst())) {
                 Akas aka = new Akas();
                 //aka.setOrdering(Integer.parseInt(line.split("\t")[1]));
                 aka.setTitle(line.split("\t")[2]);
@@ -134,10 +137,9 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                 //aka.setTypes(line.split("\t")[5]);
                 //aka.setAttributes(line.split("\t")[6]);
                 aka.setIsOriginalTitle(Boolean.parseBoolean(line.split("\t")[7]));
-                System.out.println("aka: " + aka.getTitle());
                 u.addAkas(aka);
-
-
+                //System.out.println(u.getAkas());
+            }
 
 
         }
@@ -154,13 +156,14 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     }
                     return Stream.empty();
                 }
-        ).skip(1).takeWhile(id -> id.split("\t")[0].equals(u.getTconst())).forEach(line -> {
+        ).skip(1).forEach(line -> {
+            if(line.split("\t")[0].equals(u.getTconst())) {
+                u.setAverageRating(Double.parseDouble(line.split("\t")[1]));
+                u.setNumVotes(Integer.parseInt(line.split("\t")[2]));
+                System.out.println("rating: " + u);
 
-                        u.setAverageRating(Double.parseDouble(line.split("\t")[1]));
-                        u.setNumVotes(Integer.parseInt(line.split("\t")[2]));
-                        System.out.println("rating: " + u);
-
-                }
+            }
+        }
         );
     }
 
@@ -175,18 +178,36 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     return Stream.empty();
                 }
         ).skip(1).forEach(line -> {
-                    if(line.split("\t")[0].equals(u.getTconst())){
-                        if(line.split("\t")[3].equals("director")){
+                    if(line.split("\t")[0].equals(u.getTconst()) && (line.split("\t")[3].equals("actor") || line.split("\t")[3].equals("actress"))){
                             Principal principal = new Principal();
                             principal.setNconst(line.split("\t")[1]);
+                            principal.setCharacters(line.split("\t")[5]);
                             u.addPrincipal(principal);
-                        }
+                            System.out.println("starring: " + u.getPrincipals());
                     }
                 }
         );
     }
 
     private void addCrew(Movie u, List<String> crew) {
+        crew.stream().map(Paths::get).flatMap(
+                path -> {
+                    try {
+                        return Files.lines(path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return Stream.empty();
+                }
+        ).skip(1).forEach(line -> {
+                    if(line.split("\t")[0].equals(u.getTconst())){
+                        Crew c = new Crew();
+                        c.setNconst(line.split("\t")[1]);
+                        u.addDirector(c);
+                        System.out.println("director: " + u.getDirector());
+                    }
+                }
+        );
     }
 
     private void addEpisodes(Movie u, List<String> episodes) {

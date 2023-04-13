@@ -73,4 +73,8 @@ public class Akas {
     public void setIsOriginalTitle(boolean isOriginalTitle) {
         this.isOriginalTitle = isOriginalTitle;
     }
+
+    public String toString(){
+        return "title: " + getTitle() + " region: " + getRegion() + " language: " + getLanguage() + " isOriginalTitle: " + getIsOriginalTitle();
+    }
 }
