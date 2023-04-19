@@ -35,8 +35,15 @@ public class FileLoaderServiceImpl implements FileLoaderService{
     }
 
     @Override
-    public void createIndex(InputStream file) {
-        elasticClient.createIndex(file);
+    public void createIndex() {
+        try {
+            elasticClient.createIndex();
+            elasticClient.settings();
+            elasticClient.mapping();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Async
@@ -51,25 +58,16 @@ public class FileLoaderServiceImpl implements FileLoaderService{
         List<String> principalsList = Arrays.asList(principals.getOriginalFilename().split("\\s*,\\s*"));
         List<String> crewList = Arrays.asList(crew.getOriginalFilename().split("\\s*,\\s*"));
         List<String> episodesList = Arrays.asList(episodes.getOriginalFilename().split("\\s*,\\s*"));
+
         /*
-        //To read multiple files
-        List<String> files = Arrays.asList(
-              basics.getOriginalFilename().split("\\s*,\\s*")[0],
-                ratings.getOriginalFilename().split("\\s*,\\s*")[0],
-                akas.getOriginalFilename().split("\\s*,\\s*")[0],
-                principals.getOriginalFilename().split("\\s*,\\s*")[0],
-                crew.getOriginalFilename().split("\\s*,\\s*")[0],
-                episodes.getOriginalFilename().split("\\s*,\\s*")[0]
-                );
-
-         */
-
         try {
             elasticClient.createIndex();
+            //elasticClient.settings();
+            elasticClient.mapping();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+*/
 
 
         basicsList.stream().map(Paths::get).flatMap(
@@ -100,21 +98,6 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                 }
         );
         elasticClient.indexDocument(movies);
-    }
-
-    private Stream readFile(List<String> fileName){
-        Stream o = fileName.stream().map(Paths::get).flatMap(
-                path -> {
-                    try {
-                        return Files.lines(path);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return Stream.empty();
-                }
-        ).skip(1);
-
-        return o;
     }
 
     private void addAkas(Movie u, List<String> akas) {
@@ -160,7 +143,7 @@ public class FileLoaderServiceImpl implements FileLoaderService{
             if(line.split("\t")[0].equals(u.getTconst())) {
                 u.setAverageRating(Double.parseDouble(line.split("\t")[1]));
                 u.setNumVotes(Integer.parseInt(line.split("\t")[2]));
-                System.out.println("rating: " + u);
+                //System.out.println("rating: " + u);
 
             }
         }
@@ -183,7 +166,7 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                             principal.setNconst(line.split("\t")[1]);
                             principal.setCharacters(line.split("\t")[5]);
                             u.addPrincipal(principal);
-                            System.out.println("starring: " + u.getPrincipals());
+                            //System.out.println("starring: " + u.getPrincipals());
                     }
                 }
         );
@@ -204,16 +187,11 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                         Crew c = new Crew();
                         c.setNconst(line.split("\t")[1]);
                         u.addDirector(c);
-                        System.out.println("director: " + u.getDirector());
+                        //System.out.println("director: " + u.getDirector());
                     }
                 }
         );
     }
-
-    private void addEpisodes(Movie u, List<String> episodes) {
-    }
-
-
 
     protected Movie createMovie(String data) {
         String[] movieData = data.split("\t");

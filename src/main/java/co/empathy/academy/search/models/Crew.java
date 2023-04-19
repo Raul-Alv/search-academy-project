@@ -22,7 +22,4 @@ public class Crew {
         return Nconst;
     }
 
-   public String getDirector(){
-        return "name: " + getNconst();
-   }
 }

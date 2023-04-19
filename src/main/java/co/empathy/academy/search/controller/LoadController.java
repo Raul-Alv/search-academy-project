@@ -21,6 +21,7 @@ public class LoadController {
     public ResponseEntity loadUsers( @RequestParam MultipartFile basics, @RequestParam MultipartFile ratings,
                                      @RequestParam MultipartFile akas, @RequestParam MultipartFile principals,
                                      @RequestParam MultipartFile crew, @RequestParam MultipartFile episodes){
+        fileLoaderService.createIndex();
         fileLoaderService.loadMovies(basics, ratings, akas, principals, crew, episodes);
         return ResponseEntity.accepted().build();
     }
