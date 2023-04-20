@@ -1,7 +1,9 @@
 package co.empathy.academy.search.repositories;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
 import co.empathy.academy.search.configuration.ElasticsearchCall;
 import co.empathy.academy.search.models.Movie;
@@ -61,7 +63,7 @@ public class ElasticClient {
                 System.out.println("indexada: " + m.getTconst());
             }
             BulkResponse result = elastic.establishConnection().bulk(br.build());
-
+            return;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -82,4 +84,17 @@ public class ElasticClient {
         elastic.establishConnection().indices().open(o -> o.index("imdb"));
     }
 
+    public List<Movie> executeQuery(Query query, int size) throws IOException {
+        SearchResponse<Movie> response =
+                elastic.establishConnection().search(s ->
+                                s.index("imdb")
+                                .size(size),
+                        Movie.class);
+
+        return response.hits().hits().stream().map(h -> h.source()).toList();
+    }
+
+    public List<Movie> executeMultipleQuery(List<Query> termQuery, int i) {
+        return null;
+    }
 }

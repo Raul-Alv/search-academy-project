@@ -3,7 +3,7 @@ package co.empathy.academy.search.models;
 public class Crew {
 
     private String tconst;
-    private String Nconst;
+    private String nconst;
 
 
 
@@ -11,7 +11,7 @@ public class Crew {
         this.tconst = tconst;
     }
     public void setNconst(String s) {
-        this.Nconst = s;
+        this.nconst = s;
     }
 
     public String getTconst() {
@@ -19,7 +19,7 @@ public class Crew {
     }
 
     public String getNconst() {
-        return Nconst;
+        return nconst;
     }
 
 }

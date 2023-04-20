@@ -6,6 +6,11 @@ public class Akas {
     private String title;
     private String region;
     private String language;
+
+    public boolean isOriginalTitle() {
+        return isOriginalTitle;
+    }
+
     private String types;
     private String attributes;
     private boolean isOriginalTitle;
