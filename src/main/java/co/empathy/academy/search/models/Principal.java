@@ -48,12 +48,4 @@ public class Principal {
         this.characters = characters;
     }
 
-    public String getStarring(){
-        String starring = "";
-        if (getCategory().equals("actor") || getCategory().equals("actress")){
-            starring = "name: " + getNconst();
-        }
-        starring += "characters: " + getCharacters();
-        return starring;
-    }
 }

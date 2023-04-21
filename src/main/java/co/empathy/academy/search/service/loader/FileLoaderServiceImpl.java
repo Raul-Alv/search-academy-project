@@ -30,13 +30,25 @@ public class FileLoaderServiceImpl implements FileLoaderService{
     private LinkedList<Movie> movies = new LinkedList<>();
     @Autowired
     private ElasticClient elasticClient;
+
+    private int readAkas = 1;
+    private int readRatings = 1;
+    private int readCrew = 1;
+    private int readPrincipals = 1;
     public FileLoaderServiceImpl() {
 
     }
 
     @Override
-    public void createIndex(InputStream file) {
-        elasticClient.createIndex(file);
+    public void createIndex() {
+        try {
+            elasticClient.createIndex();
+            elasticClient.settings();
+            elasticClient.mapping();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Async
@@ -51,25 +63,16 @@ public class FileLoaderServiceImpl implements FileLoaderService{
         List<String> principalsList = Arrays.asList(principals.getOriginalFilename().split("\\s*,\\s*"));
         List<String> crewList = Arrays.asList(crew.getOriginalFilename().split("\\s*,\\s*"));
         List<String> episodesList = Arrays.asList(episodes.getOriginalFilename().split("\\s*,\\s*"));
+
         /*
-        //To read multiple files
-        List<String> files = Arrays.asList(
-              basics.getOriginalFilename().split("\\s*,\\s*")[0],
-                ratings.getOriginalFilename().split("\\s*,\\s*")[0],
-                akas.getOriginalFilename().split("\\s*,\\s*")[0],
-                principals.getOriginalFilename().split("\\s*,\\s*")[0],
-                crew.getOriginalFilename().split("\\s*,\\s*")[0],
-                episodes.getOriginalFilename().split("\\s*,\\s*")[0]
-                );
-
-         */
-
         try {
             elasticClient.createIndex();
+            //elasticClient.settings();
+            elasticClient.mapping();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+*/
 
 
         basicsList.stream().map(Paths::get).flatMap(
@@ -85,39 +88,29 @@ public class FileLoaderServiceImpl implements FileLoaderService{
             System.out.println("creando: " + line);
             Movie u = createMovie(line);
 
-            if(!u.isAdult()) {
+            if(!u.isAdult() || !u.getPrimaryTitle().contains("Episode #")) {
+                System.out.println("entra en if");
                 addAkas(u, akasList);
                 addRatings(u, ratingsList);
                 addCrew(u, crewList);
                 addPrincipals(u, principalsList);
 
                 //addEpisodes(u, episodesList);
-
+                //System.out.println("pelicula creada, añadiendo lista");
                 movies.add(u);
+                elasticClient.indexSingleDocument(u);
             }
                     //movies.add(u);
                     //System.out.println("creada: " + u.getPrimaryTitle());
-                }
+
+            }
+
         );
-        elasticClient.indexDocument(movies);
-    }
-
-    private Stream readFile(List<String> fileName){
-        Stream o = fileName.stream().map(Paths::get).flatMap(
-                path -> {
-                    try {
-                        return Files.lines(path);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return Stream.empty();
-                }
-        ).skip(1);
-
-        return o;
+        //elasticClient.indexDocument(movies);
     }
 
     private void addAkas(Movie u, List<String> akas) {
+        //System.out.println("entra en akas");
         akas.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -127,7 +120,7 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     }
                     return Stream.empty();
                 }
-        ).skip(1).forEach(line -> {
+        ).skip(readAkas).takeWhile(line -> line.split("\t")[0].equals(u.getTconst())).forEach(line -> {
             if(line.split("\t")[0].equals(u.getTconst())) {
                 Akas aka = new Akas();
                 //aka.setOrdering(Integer.parseInt(line.split("\t")[1]));
@@ -138,7 +131,8 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                 //aka.setAttributes(line.split("\t")[6]);
                 aka.setIsOriginalTitle(Boolean.parseBoolean(line.split("\t")[7]));
                 u.addAkas(aka);
-                //System.out.println(u.getAkas());
+                readAkas++;
+
             }
 
 
@@ -147,6 +141,7 @@ public class FileLoaderServiceImpl implements FileLoaderService{
     }
 
     private void addRatings(Movie u, List<String> ratings) {
+        //System.out.println("entra en ratings");
         ratings.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -156,18 +151,20 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     }
                     return Stream.empty();
                 }
-        ).skip(1).forEach(line -> {
+        ).skip(1).skip(readRatings).takeWhile(line->line.split("\t")[0].equals(u.getTconst())).forEach(line -> {
             if(line.split("\t")[0].equals(u.getTconst())) {
                 u.setAverageRating(Double.parseDouble(line.split("\t")[1]));
                 u.setNumVotes(Integer.parseInt(line.split("\t")[2]));
-                System.out.println("rating: " + u);
+                readRatings++;
 
+                //System.out.println("Rating añadido");
             }
         }
         );
     }
 
     private void addPrincipals(Movie u, List<String> principals) {
+        //System.out.println("entra en principals");
         principals.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -177,19 +174,22 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     }
                     return Stream.empty();
                 }
-        ).skip(1).forEach(line -> {
-                    if(line.split("\t")[0].equals(u.getTconst()) && (line.split("\t")[3].equals("actor") || line.split("\t")[3].equals("actress"))){
-                            Principal principal = new Principal();
-                            principal.setNconst(line.split("\t")[1]);
-                            principal.setCharacters(line.split("\t")[5]);
-                            u.addPrincipal(principal);
-                            System.out.println("starring: " + u.getPrincipals());
-                    }
-                }
+        ).skip(1).skip(readPrincipals).takeWhile(line->line.split("\t")[0].equals(u.getTconst())).forEach(line -> {
+            if(line.split("\t")[0].equals(u.getTconst()) && (line.split("\t")[3].equals("actor") || line.split("\t")[3].equals("actress"))){
+                    Principal principal = new Principal();
+                    principal.setNconst(line.split("\t")[1]);
+                    principal.setCharacters(line.split("\t")[5]);
+                    u.addPrincipal(principal);
+                    readPrincipals++;
+
+                    //System.out.println("starring: " + u.getPrincipals());
+            }
+        }
         );
     }
 
     private void addCrew(Movie u, List<String> crew) {
+        //System.out.println("entra en crew");
         crew.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -199,21 +199,18 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     }
                     return Stream.empty();
                 }
-        ).skip(1).forEach(line -> {
-                    if(line.split("\t")[0].equals(u.getTconst())){
-                        Crew c = new Crew();
-                        c.setNconst(line.split("\t")[1]);
-                        u.addDirector(c);
-                        System.out.println("director: " + u.getDirector());
-                    }
-                }
+        ).skip(1).skip(readCrew).takeWhile(line->line.split("\t")[0].equals(u.getTconst())).forEach(line -> {
+            if(line.split("\t")[0].equals(u.getTconst())){
+                Crew c = new Crew();
+                c.setNconst(line.split("\t")[1]);
+                u.addDirector(c);
+                readCrew++;
+
+                //System.out.println("director: " + u.getDirector());
+            }
+        }
         );
     }
-
-    private void addEpisodes(Movie u, List<String> episodes) {
-    }
-
-
 
     protected Movie createMovie(String data) {
         String[] movieData = data.split("\t");
@@ -221,7 +218,7 @@ public class FileLoaderServiceImpl implements FileLoaderService{
         String titleType = movieData[1];
         String primaryTitle = movieData[2];
         String originalTitle = movieData[3];
-        boolean isAdult = Boolean.parseBoolean(movieData[4]);
+        boolean isAdult = Integer.parseInt(movieData[4])==0 ? false : true;
         int startYear = (movieData[5].equals("\\N") ? -1 : Integer.parseInt(movieData[5]));
         int endYear = (movieData[6].equals("\\N") ? -1 : Integer.parseInt(movieData[6]));
         int runtimeMinutes = (movieData[7].equals("\\N") ? -1 : Integer.parseInt(movieData[7]));

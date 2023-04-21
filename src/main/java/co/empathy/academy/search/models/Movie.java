@@ -1,5 +1,7 @@
 package co.empathy.academy.search.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ public class Movie {
     private String titleType;
     private String primaryTitle;
     private String originalTitle;
+    @JsonProperty("isAdult")
     private boolean isAdult;
     private int startYear;
     private int endYear;
@@ -121,20 +124,8 @@ public class Movie {
         this.cast.add(principal);
     }
 
-    public String getAkas(){
-        String result = "";
-        for(Akas aka: akas){
-            result += "Aka: " + aka.getTitle();
-        }
-        return result;
-    }
-
-    public String getPrincipals(){
-        String result = "";
-        for(Principal p: cast){
-            result += "Director: " + p.getNconst();
-        }
-        return result;
+    public List<Principal> getCast(){
+        return cast;
     }
 
     public void addDirector(Crew c) {
@@ -143,5 +134,9 @@ public class Movie {
 
     public Crew getDirector(){
         return director;
+    }
+
+    public List<Akas> getAkas(){
+        return akas;
     }
 }

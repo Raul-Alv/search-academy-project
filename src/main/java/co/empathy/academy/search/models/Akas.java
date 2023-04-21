@@ -1,14 +1,19 @@
 package co.empathy.academy.search.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Akas {
     private String titleId;
-    private int ordering;
     private String title;
     private String region;
     private String language;
-    private String types;
-    private String attributes;
+
+    @JsonProperty("isOriginalTitle")
     private boolean isOriginalTitle;
+
+    public boolean isOriginalTitle() {
+        return isOriginalTitle;
+    }
 
     public String getTitleId() {
         return titleId;
@@ -16,14 +21,6 @@ public class Akas {
 
     public void setTitleId(String titleId) {
         this.titleId = titleId;
-    }
-
-    public int getOrdering() {
-        return ordering;
-    }
-
-    public void setOrdering(int ordering) {
-        this.ordering = ordering;
     }
 
     public String getTitle() {
@@ -50,22 +47,6 @@ public class Akas {
         this.language = language;
     }
 
-    public String getTypes() {
-        return types;
-    }
-
-    public void setTypes(String types) {
-        this.types = types;
-    }
-
-    public String getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(String attributes) {
-        this.attributes = attributes;
-    }
-
     public boolean getIsOriginalTitle() {
         return isOriginalTitle;
     }
@@ -74,7 +55,4 @@ public class Akas {
         this.isOriginalTitle = isOriginalTitle;
     }
 
-    public String toString(){
-        return "title: " + getTitle() + " region: " + getRegion() + " language: " + getLanguage() + " isOriginalTitle: " + getIsOriginalTitle();
-    }
 }

@@ -1,0 +1,80 @@
+{
+    "properties": {
+      "id": {
+        "type": "keyword",
+        "index": "true"
+      },
+      "tconst": {
+        "type": "keyword",
+        "index": "true"
+      },
+      "titleType": {
+        "type": "keyword"
+      },
+      "originalTitle": {
+        "type": "text"
+      },
+      "isAdult": {
+        "type": "boolean"
+      },
+      "startYear": {
+        "type": "integer"
+      },
+      "endYear": {
+        "type": "integer"
+      },
+      "runtimeMinutes": {
+        "type": "integer"
+      },
+      "genres": {
+        "type": "text"
+      },
+      "averageRating": {
+        "type": "double"
+      },
+      "numVotes": {
+        "type": "integer"
+      },
+      "akas":{
+        "type": "nested",
+        "properties": {
+          "title": {
+            "type": "text"
+          },
+          "region": {
+            "type": "text"
+          },
+          "language": {
+            "type": "text"
+          },
+          "isOriginalTitle": {
+            "type": "boolean"
+          }
+        }
+      },
+      "directors": {
+        "type": "nested",
+        "properties": {
+          "nconst": {
+            "type": "keyword"
+          }
+        }
+      },
+      "starring": {
+        "type": "nested",
+        "properties": {
+          "name": {
+            "type": "nested",
+            "properties": {
+              "nconst": {
+                "type": "keyword"
+              }
+            }
+          },
+          "characters": {
+            "type": "text"
+          }
+        }
+      }
+    }
+  }
