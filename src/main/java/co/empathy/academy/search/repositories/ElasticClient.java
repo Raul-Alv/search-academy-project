@@ -97,4 +97,21 @@ public class ElasticClient {
     public List<Movie> executeMultipleQuery(List<Query> termQuery, int i) {
         return null;
     }
+
+    public void indexSingleDocument(Movie m) {
+        try {
+            BulkRequest.Builder br = new BulkRequest.Builder();
+                br.operations(op -> op
+                        .index(idx -> idx
+                                .index("imdb")
+                                .id(m.getTconst())
+                                .document(m)));
+                System.out.println("indexada: " + m.getTconst());
+
+            BulkResponse result = elastic.establishConnection().bulk(br.build());
+            return;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

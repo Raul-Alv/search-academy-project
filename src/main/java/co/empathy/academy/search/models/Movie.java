@@ -1,5 +1,7 @@
 package co.empathy.academy.search.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ public class Movie {
     private String titleType;
     private String primaryTitle;
     private String originalTitle;
+    @JsonProperty("isAdult")
     private boolean isAdult;
     private int startYear;
     private int endYear;
