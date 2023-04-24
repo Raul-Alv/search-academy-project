@@ -1,5 +1,6 @@
 package co.empathy.academy.search.repositories;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
@@ -87,10 +88,10 @@ public class ElasticClient {
     public List<Movie> executeQuery(Query query, int size) throws IOException {
         SearchResponse<Movie> response =
                 elastic.establishConnection().search(s ->
-                                s.index("imdb")
+                                s.index("imdb").query(query)
                                 .size(size),
                         Movie.class);
-
+        List<Movie> a = response.hits().hits().stream().map(h -> h.source()).toList();
         return response.hits().hits().stream().map(h -> h.source()).toList();
     }
 
@@ -113,5 +114,17 @@ public class ElasticClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Movie> executeBoolQuery(BoolQuery boolQuery, int size) throws IOException {
+        //Query query = boolQuery._toQuery();
+        SearchResponse<Movie> response =
+                elastic.establishConnection().search(s ->
+                                s.index("imdb")
+                                        .query(boolQuery._toQuery())
+                                        .size(size),
+                        Movie.class);
+        List<Movie> a = response.hits().hits().stream().map(h -> h.source()).toList();
+        return response.hits().hits().stream().map(h -> h.source()).toList();
     }
 }

@@ -1,7 +1,7 @@
 package co.empathy.academy.search.service;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.json.JsonData;
 import co.empathy.academy.search.configuration.ElasticsearchCall;
 import co.empathy.academy.search.models.Movie;
 import co.empathy.academy.search.repositories.ElasticClient;
@@ -43,7 +43,6 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<Movie> termSearch(String query, String field) throws IOException {
-        System.out.println("entra");
         Query termQuery = TermQuery.of(t -> t
                 .value(query)
                 .field(field))._toQuery();
@@ -55,5 +54,38 @@ public class SearchServiceImpl implements SearchService {
         return null;
     }
 
-    
+    @Override
+    public List<Movie> termAndFilterSearch(String query, String field, String filterField, String filterValue) throws IOException {
+        BoolQuery boolQuery = BoolQuery.of(b -> b
+                .must(MatchQuery.of(t -> t
+                        .query(query)
+                        .field(field))._toQuery())
+                .filter(RangeQuery.of(t -> t
+                        .field(filterField)
+                        .gte(JsonData.of(filterValue))).
+                        _toQuery())
+        );
+        return elasticClient.executeBoolQuery(boolQuery, 100);
+    }
+
+    @Override
+    public List<Movie> quizResult(String generoQuery, String duracionMinQuery, String duracionMaxQuery, String ratingQuery) throws IOException {
+        BoolQuery boolQuery = BoolQuery.of(b -> b.
+                must(MatchQuery.of(t -> t
+                        .query(generoQuery)
+                        .field("genres"))._toQuery())
+                .must(RangeQuery.of(t -> t
+                        .field("runtimeMinutes")
+                        .gte(JsonData.of(duracionMinQuery))
+                        .lte(JsonData.of(duracionMaxQuery))).
+                        _toQuery())
+                .must(RangeQuery.of(t -> t
+                        .field("averageRating")
+                        .lte(JsonData.of(ratingQuery))).
+                        _toQuery())
+        );
+        return elasticClient.executeBoolQuery(boolQuery, 100);
+    }
+
+
 }

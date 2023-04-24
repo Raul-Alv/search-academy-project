@@ -38,4 +38,17 @@ public class SearchController {
     public ResponseEntity<List<Movie>> multiTermSearch(@RequestParam(name = "query") String query, @RequestParam("field") String field) throws IOException {
         return ResponseEntity.ok(service.multiTermSearch(query, field));
     }
+
+    @GetMapping(value="/termAndFilter", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Movie>> termAndFilterSearch(@RequestParam(name = "query") String query, @RequestParam("field") String field, @RequestParam("filterField") String filterField, @RequestParam("filterValue") String filterValue) throws IOException {
+        return ResponseEntity.ok(service.termAndFilterSearch(query, field, filterField, filterValue));
+    }
+
+    @GetMapping(value="/quizResult", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Movie>> quizResult(@RequestParam(name = "generoQuery") String generoQuery,
+                                                  @RequestParam(name = "duracionMinQuery") String duracionMinQuery,
+                                                  @RequestParam(name = "duracionMaxQuery") String duracionMaxQuery,
+                                                  @RequestParam(name = "ratingQuery") String ratingQuery) throws IOException {
+        return ResponseEntity.ok(service.quizResult(generoQuery, duracionMinQuery, duracionMaxQuery, ratingQuery));
+    }
 }

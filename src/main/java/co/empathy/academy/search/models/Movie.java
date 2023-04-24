@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
+
+    public Movie(){
+        super();
+    }
     private String tconst;
     private String titleType;
     private String primaryTitle;
