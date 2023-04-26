@@ -1,8 +1,15 @@
 package co.empathy.academy.search.service;
 
+import co.elastic.clients.elasticsearch._types.FieldSort;
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.BucketAggregationBase;
+import co.elastic.clients.elasticsearch._types.aggregations.TermsAggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.json.JsonData;
 import co.empathy.academy.search.configuration.ElasticsearchCall;
+import co.empathy.academy.search.models.Facet;
 import co.empathy.academy.search.models.Movie;
 import co.empathy.academy.search.repositories.ElasticClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +17,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -85,6 +94,34 @@ public class SearchServiceImpl implements SearchService {
                         _toQuery())
         );
         return elasticClient.executeBoolQuery(boolQuery, 100);
+    }
+
+    @Override
+    public List<Movie> latest() throws IOException {
+        Query latest = RangeQuery.of(t -> t
+                .field("startYear")
+                .gte(JsonData.of("2023"))).
+                _toQuery();
+
+        FieldSort sorted = FieldSort.of(t -> t
+                .field("startYear")
+                .order(SortOrder.Desc));
+
+        SortOptions sortOptions = SortOptions.of(t -> t.field(sorted));
+
+        return elasticClient.executeAndSortQuery(latest, sortOptions, 100);
+    }
+
+    @Override
+    public Facet generes() throws IOException {
+        Query query = BoolQuery.of(b -> b
+                .filter(MatchAllQuery.of(q -> q.queryName("MatchAll"))._toQuery()))._toQuery();
+
+        Aggregation aggs = TermsAggregation.of(t -> t.field("genres").size(100))._toAggregation();
+        Map<String, Aggregation> aggsMap = new HashMap<String, Aggregation>();
+        aggsMap.put("genres", aggs);
+
+        return elasticClient.executeAggregation(query, aggsMap, 100);
     }
 
 

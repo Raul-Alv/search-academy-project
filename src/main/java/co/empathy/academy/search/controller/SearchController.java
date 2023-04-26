@@ -1,7 +1,9 @@
 package co.empathy.academy.search.controller;
 
+import co.elastic.clients.elasticsearch._types.aggregations.BucketAggregationBase;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.sql.QueryResponse;
+import co.empathy.academy.search.models.Facet;
 import co.empathy.academy.search.models.Movie;
 import co.empathy.academy.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +52,15 @@ public class SearchController {
                                                   @RequestParam(name = "duracionMaxQuery") String duracionMaxQuery,
                                                   @RequestParam(name = "ratingQuery") String ratingQuery) throws IOException {
         return ResponseEntity.ok(service.quizResult(generoQuery, duracionMinQuery, duracionMaxQuery, ratingQuery));
+    }
+
+    @GetMapping(value="/latest", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Movie>> latest() throws IOException {
+        return ResponseEntity.ok(service.latest());
+    }
+
+    @GetMapping(value="/generes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Facet> generes() throws IOException {
+        return ResponseEntity.ok(service.generes());
     }
 }
