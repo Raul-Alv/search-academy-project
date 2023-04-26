@@ -8,5 +8,5 @@ public interface FileLoaderService {
     void createIndex();
     void loadMovies(MultipartFile basics, MultipartFile ratings,
                     MultipartFile akas, MultipartFile principals,
-                    MultipartFile crew, MultipartFile episodes);
+                    MultipartFile crew);
 }

@@ -15,13 +15,11 @@ public interface SearchService {
 
     List<Movie> termSearch(String query, String field) throws IOException;
 
-    List<Movie> multiTermSearch(String query, String field);
-
     List<Movie> termAndFilterSearch(String query, String field, String filterField, String filterValue) throws IOException;
 
-    List<Movie> quizResult(String generoQuery, String duracionMinQuery, String duracionMaxQuery, String ratingQuery) throws IOException;
+    List<Movie> quizResult(String genreQuery, String minDurationQuery, String maxDurationQuery, String ratingQuery) throws IOException;
 
     List<Movie> latest() throws IOException;
 
-    Facet generes() throws IOException;
+    Facet genres() throws IOException;
 }

@@ -5,17 +5,13 @@ import co.empathy.academy.search.models.Crew;
 import co.empathy.academy.search.models.Movie;
 import co.empathy.academy.search.models.Principal;
 import co.empathy.academy.search.repositories.ElasticClient;
-import com.fasterxml.jackson.core.util.BufferRecycler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -39,6 +35,9 @@ public class FileLoaderServiceImpl implements FileLoaderService{
 
     }
 
+    /**
+     * Method to create an index and add a mapping to it
+     */
     @Override
     public void createIndex() {
         try {
@@ -51,29 +50,25 @@ public class FileLoaderServiceImpl implements FileLoaderService{
 
     }
 
+    /**
+     * Method to read the files and create a movie object, indexing it
+     * @param basics
+     * @param ratings
+     * @param akas
+     * @param principals
+     * @param crew
+     */
     @Async
     @Override
     public void loadMovies(MultipartFile basics, MultipartFile ratings,
                            MultipartFile akas, MultipartFile principals,
-                           MultipartFile crew, MultipartFile episodes) {
-        //To read only one file
+                           MultipartFile crew) {
+
         List<String> basicsList = Arrays.asList(basics.getOriginalFilename().split("\\s*,\\s*"));
         List<String> ratingsList = Arrays.asList(ratings.getOriginalFilename().split("\\s*,\\s*"));
         List<String> akasList = Arrays.asList(akas.getOriginalFilename().split("\\s*,\\s*"));
         List<String> principalsList = Arrays.asList(principals.getOriginalFilename().split("\\s*,\\s*"));
         List<String> crewList = Arrays.asList(crew.getOriginalFilename().split("\\s*,\\s*"));
-        List<String> episodesList = Arrays.asList(episodes.getOriginalFilename().split("\\s*,\\s*"));
-
-        /*
-        try {
-            elasticClient.createIndex();
-            //elasticClient.settings();
-            elasticClient.mapping();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-*/
-
 
         basicsList.stream().map(Paths::get).flatMap(
                 path -> {
@@ -85,32 +80,27 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     return Stream.empty();
                 }
         ).skip(1).forEach(line -> {
-            System.out.println("creando: " + line);
+            System.out.println("creating: " + line);
             Movie u = createMovie(line);
 
             if(!u.isAdult() || !u.getPrimaryTitle().contains("Episode #")) {
-                System.out.println("entra en if");
                 addAkas(u, akasList);
                 addRatings(u, ratingsList);
                 addCrew(u, crewList);
                 addPrincipals(u, principalsList);
 
-                //addEpisodes(u, episodesList);
-                //System.out.println("pelicula creada, añadiendo lista");
                 movies.add(u);
                 elasticClient.indexSingleDocument(u);
             }
-                    //movies.add(u);
-                    //System.out.println("creada: " + u.getPrimaryTitle());
-
-            }
-
-        );
-        //elasticClient.indexDocument(movies);
+        });
     }
 
+    /**
+     * Adds the Akas to the movie
+     * @param u
+     * @param akas
+     */
     private void addAkas(Movie u, List<String> akas) {
-        //System.out.println("entra en akas");
         akas.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -123,25 +113,23 @@ public class FileLoaderServiceImpl implements FileLoaderService{
         ).skip(readAkas).takeWhile(line -> line.split("\t")[0].equals(u.getTconst())).forEach(line -> {
             if(line.split("\t")[0].equals(u.getTconst())) {
                 Akas aka = new Akas();
-                //aka.setOrdering(Integer.parseInt(line.split("\t")[1]));
                 aka.setTitle(line.split("\t")[2]);
                 aka.setRegion(line.split("\t")[3]);
                 aka.setLanguage(line.split("\t")[4]);
-                //aka.setTypes(line.split("\t")[5]);
-                //aka.setAttributes(line.split("\t")[6]);
                 aka.setIsOriginalTitle(Boolean.parseBoolean(line.split("\t")[7]));
                 u.addAkas(aka);
                 readAkas++;
 
             }
-
-
-        }
-        );
+        });
     }
 
+    /**
+     * Adds the ratings for the movie
+     * @param u
+     * @param ratings
+     */
     private void addRatings(Movie u, List<String> ratings) {
-        //System.out.println("entra en ratings");
         ratings.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -156,15 +144,16 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                 u.setAverageRating(Double.parseDouble(line.split("\t")[1]));
                 u.setNumVotes(Integer.parseInt(line.split("\t")[2]));
                 readRatings++;
-
-                //System.out.println("Rating añadido");
             }
-        }
-        );
+        });
     }
 
+    /**
+     * Adds the actors to the movie
+     * @param u
+     * @param principals
+     */
     private void addPrincipals(Movie u, List<String> principals) {
-        //System.out.println("entra en principals");
         principals.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -181,15 +170,16 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                     principal.setCharacters(line.split("\t")[5]);
                     u.addPrincipal(principal);
                     readPrincipals++;
-
-                    //System.out.println("starring: " + u.getPrincipals());
             }
-        }
-        );
+        });
     }
 
+    /**
+     * Adds the directors to the movie
+     * @param u
+     * @param crew
+     */
     private void addCrew(Movie u, List<String> crew) {
-        //System.out.println("entra en crew");
         crew.stream().map(Paths::get).flatMap(
                 path -> {
                     try {
@@ -205,13 +195,15 @@ public class FileLoaderServiceImpl implements FileLoaderService{
                 c.setNconst(line.split("\t")[1]);
                 u.addDirector(c);
                 readCrew++;
-
-                //System.out.println("director: " + u.getDirector());
             }
-        }
-        );
+        });
     }
 
+    /**
+     * Creates a movie object
+     * @param data
+     * @return
+     */
     protected Movie createMovie(String data) {
         String[] movieData = data.split("\t");
         String tconst = movieData[0];

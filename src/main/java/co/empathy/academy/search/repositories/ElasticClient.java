@@ -56,15 +56,6 @@ public class ElasticClient {
      public void indexDocument(List<Movie> movies){
         try {
             BulkRequest.Builder br = new BulkRequest.Builder();
-            /*
-            movies.forEach(m ->
-                    br.operations(op -> op
-                    .index(idx -> idx
-                            .index("imdb")
-                            .id(m.getTconst())
-                            .document(m))));
-
-             */
             for (Movie m : movies) {
                 br.operations(op -> op
                         .index(idx -> idx
@@ -74,7 +65,6 @@ public class ElasticClient {
                 System.out.println("indexada: " + m.getTconst());
             }
             BulkResponse result = elastic.establishConnection().bulk(br.build());
-            return;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +72,6 @@ public class ElasticClient {
 
     public void mapping() throws IOException {
         InputStream mapping = getClass().getClassLoader().getResourceAsStream("mapping.json");
-        //System.out.println(IOUtils.toString(mapping, StandardCharsets.UTF_8));
         elastic.establishConnection().indices().putMapping(p -> p.index("imdb").withJson(mapping));
     }
 
@@ -115,10 +104,6 @@ public class ElasticClient {
         return response.hits().hits().stream().map(h -> h.source()).toList();
     }
 
-    public List<Movie> executeMultipleQuery(List<Query> termQuery, int i) {
-        return null;
-    }
-
     public void indexSingleDocument(Movie m) {
         try {
             BulkRequest.Builder br = new BulkRequest.Builder();
@@ -127,7 +112,7 @@ public class ElasticClient {
                                 .index("imdb")
                                 .id(m.getTconst())
                                 .document(m)));
-                System.out.println("indexada: " + m.getTconst());
+                System.out.println("indexed: " + m.getTconst());
 
             BulkResponse result = elastic.establishConnection().bulk(br.build());
             return;
@@ -137,7 +122,6 @@ public class ElasticClient {
     }
 
     public List<Movie> executeBoolQuery(BoolQuery boolQuery, int size) throws IOException {
-        //Query query = boolQuery._toQuery();
         SearchResponse<Movie> response =
                 elastic.establishConnection().search(s ->
                                 s.index("imdb")
