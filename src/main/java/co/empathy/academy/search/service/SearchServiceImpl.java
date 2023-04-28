@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -157,5 +155,61 @@ public class SearchServiceImpl implements SearchService {
         return elasticClient.executeAggregation(query, aggsMap, 100);
     }
 
+    @Override
+    public List<Movie> allFilterSearch(Optional<String> genres, Optional<String> types, Optional<Integer> maxYear, Optional<Integer> minYear, Optional<Integer> maxRuntime, Optional<Integer> minRuntime, Optional<Double> maxScore, Optional<Double> minScore, Optional<Integer> maxNHits, Optional<String> sortRating) throws IOException {
+        List<Query> filters = new ArrayList<>();
+        if (genres.isPresent()) {
+            filters.add(BoolQuery.of(b -> b.should(MatchQuery.of(t -> t
+                    .query(genres.get())
+                    .field("genres"))._toQuery()))._toQuery());
+        }
+        if (types.isPresent()) {
+            filters.add(BoolQuery.of(b -> b.should(MatchQuery.of(t -> t
+                    .query(types.get())
+                    .field("titleType"))._toQuery()))._toQuery());
+        }
+        if (maxYear.isPresent()) {
+            filters.add(RangeQuery.of(t -> t
+                            .field("startYear")
+                            .lte(JsonData.of(maxYear.get()))).
+                    _toQuery());
+        }
+        if (minYear.isPresent()) {
+            filters.add(RangeQuery.of(t -> t
+                            .field("startYear")
+                            .gte(JsonData.of(minYear.get()))).
+                    _toQuery());
+        }
+        if (maxRuntime.isPresent()) {
+            filters.add(RangeQuery.of(t -> t
+                            .field("runtimeMinutes")
+                            .lte(JsonData.of(maxRuntime.get()))).
+                    _toQuery());
+        }
+        if (maxRuntime.isPresent()) {
+            filters.add(RangeQuery.of(t -> t
+                            .field("runtimeMinutes")
+                            .gte(JsonData.of(maxRuntime.get()))).
+                    _toQuery());
+        }
+        if (maxScore.isPresent()) {
+            filters.add(RangeQuery.of(t -> t
+                            .field("averageRating")
+                            .lte(JsonData.of(maxScore.get()))).
+                    _toQuery());
+        }
+        if (minScore.isPresent()) {
+            filters.add(RangeQuery.of(t -> t
+                            .field("averageRating")
+                            .gte(JsonData.of(minScore.get()))).
+                    _toQuery());
+        }
+
+        SortOptions sortOptions = SortOptions.of(t -> t.field(FieldSort.of(t2 -> t2.field("averageRating").order(SortOrder.Desc))));
+
+        Query query = BoolQuery.of(b -> b
+                .must(MatchAllQuery.of(q -> q.queryName("MatchAll"))._toQuery()))._toQuery();
+        return elasticClient.executeAndSortQuery(query, sortOptions, 100);
+    }
 
 }

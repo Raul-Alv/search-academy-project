@@ -7,6 +7,7 @@ import co.empathy.academy.search.models.Movie;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public interface SearchService {
 
@@ -22,4 +23,10 @@ public interface SearchService {
     List<Movie> latest() throws IOException;
 
     Facet genres() throws IOException;
+
+    List<Movie> allFilterSearch(Optional<String> genres, Optional<String> types,
+                                Optional<Integer> maxYear, Optional<Integer> minYear,
+                                Optional<Integer> maxRuntime, Optional<Integer> minRuntime,
+                                Optional<Double> maxScore, Optional<Double> minScore,
+                                Optional<Integer> maxNHits, Optional<String> sortRating) throws IOException;
 }
